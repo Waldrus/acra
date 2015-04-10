@@ -204,10 +204,18 @@ public enum ReportField {
      */
     DEVICE_ID,
     /**
+     * Android unique ID
+   */
+    ANDROID_ID,
+    /**
      * Installation unique ID. This identifier allow you to track a specific
      * user application installation without using any personal data.
      */
     INSTALLATION_ID,
+    /**
+     * App install time
+     */
+    APP_INSTALL_TIME,
     /**
      * User email address. Can be provided by the user in the
      * {@link ACRA#PREF_USER_EMAIL_ADDRESS} SharedPreference.

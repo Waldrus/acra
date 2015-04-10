@@ -40,6 +40,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Environment;
+import android.provider.Settings;
 import android.text.format.Time;
 import android.util.Log;
 
@@ -278,6 +279,11 @@ public final class CrashReportDataFactory {
                 crashReportData.put(SHARED_PREFERENCES, SharedPreferencesCollector.collect(context));
             }
 
+            if (crashReportFields.contains(ANDROID_ID)) {
+                crashReportData.put(ANDROID_ID, Settings.Secure.getString(context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID));
+            }
+
             // Now get all the crash data that relies on the PackageManager
             // (which may or may not be here).
             final PackageManagerWrapper pm = new PackageManagerWrapper(context);
@@ -290,6 +296,9 @@ public final class CrashReportDataFactory {
                 }
                 if (crashReportFields.contains(APP_VERSION_NAME)) {
                     crashReportData.put(APP_VERSION_NAME, pi.versionName != null ? pi.versionName : "not set");
+                }
+                if (crashReportFields.contains(APP_INSTALL_TIME)){
+                    crashReportData.put(APP_INSTALL_TIME, Long.toString(pi.firstInstallTime));
                 }
             } else {
                 // Could not retrieve package info...
